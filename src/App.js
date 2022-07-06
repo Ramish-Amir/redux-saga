@@ -1,11 +1,15 @@
 import './App.css';
 import { addAlbum, deleteAlbum, getAlbums, updateAlbum } from './redux/actions';
 import { connect } from 'react-redux';
-import { useEffect } from 'react';
-import { add, remove, update } from './services/services';
+import { useEffect, useState } from 'react';
 
 function App(props) {
   const { albums, actions } = props
+  const [title, setTitle] = useState('')
+  const [userId, setUserId] = useState('')
+  const [id, setId] = useState()
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [dialogTitle, setDialogTitle] = useState('')
 
   useEffect(() => {
     actions.getAlbums()
@@ -17,25 +21,55 @@ function App(props) {
 
   const onAddHandler = () => {
     const newAlbum = {
-      title: 'New Dummy Album',
-      userId: 1341
+      title: title,
+      userId: userId
     }
     actions.addAlbum(newAlbum)
+    setDialogOpen(false)
   }
 
-  const onUpdateHandler = (album) => {
+  const onUpdateHandler = () => {
     const changedAlbum = {
-      ...album, title: 'Title updated'
+      id,
+      title,
+      userId
     }
-
     actions.updateAlbum(changedAlbum)
+    setDialogOpen(false)
+  }
+
+  const openAddDialog = () => {
+    setDialogTitle('add')
+    setDialogOpen(true)
+  }
+
+  const openUpdateDialog = (album) => {
+    setId(album.id)
+    setTitle(album.title)
+    setTitle(album.title)
+    setUserId(album.userId)
+    setUserId(album.userId)
+    setDialogTitle('update')
+    setDialogOpen(true)
   }
 
 
   return (
     <div className="App">
+
+      {dialogOpen && <div className='dialog'>
+        <h2>{dialogTitle}</h2>
+        <label>Title </label>
+        <input onChange={(e) => {setTitle(e.target.value)}} value={title} placeholder='title' type='text' /><br />
+        <label>User ID </label>
+        <input onChange={(e) => {setUserId(e.target.value)}} value={userId} placeholder='user id' type='text' /><br />
+        <button onClick={() => setDialogOpen(false)}>Cancel</button>
+        {dialogTitle === 'add' && <button onClick={onAddHandler}>Add</button>}
+        {dialogTitle === 'update' && <button onClick={onUpdateHandler}>Update</button>}
+      </div>}
+
       <div className='addNew'>
-        <button onClick={onAddHandler}>Add New Album</button>
+        <button onClick={openAddDialog}>Add New Album</button>
       </div>
 
       {
@@ -44,7 +78,7 @@ function App(props) {
             Name: {album.title} - id: {album.id}
             <br></br>
             <button onClick={() => onDeleteHandler(album)} >Delete Album</button>
-            <button onClick={() => onUpdateHandler(album)} >Update Album</button>
+            <button onClick={() => openUpdateDialog(album)} >Update Album</button>
           </div>
         ))
       }

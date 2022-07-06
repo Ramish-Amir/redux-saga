@@ -1,7 +1,6 @@
 import { takeEvery, call, put } from 'redux-saga/effects'
 import actionTypes from '../actions/actionTypes'
 import { getAll } from '../../services/services'
-import { albumsReducer } from '../reducers/albumsReducer'
 
 export default function* getAlbumsSaga() {
     yield takeEvery(actionTypes.GET_ALBUMS, fetchAlbums)
