@@ -9,7 +9,7 @@ export default function* deleteAlbumSaga() {
 
 function* deleteAlbum(action) {
     try {
-        yield put({type: actionTypes.GET_ALBUMS})
+        yield put({type: actionTypes.SET_LOADING})
         const resp = yield call(remove, action.payload)
         if (resp?.status === 200) {
             yield put({ type: actionTypes.DELETED_ALBUM, payload: action.payload })

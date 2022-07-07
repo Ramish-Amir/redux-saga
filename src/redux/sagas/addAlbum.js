@@ -9,7 +9,7 @@ export default function* addAlbumSaga() {
 
 function* addAlbum(action) {
     try {
-        yield put({type: actionTypes.GET_ALBUMS})
+        yield put({type: actionTypes.SET_LOADING})
         const resp = yield call(add, action.payload)
         yield put({ type: actionTypes.ADDED_ALBUM, payload: resp })
     } catch (err) {

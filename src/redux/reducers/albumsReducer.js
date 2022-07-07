@@ -9,7 +9,8 @@ const initialState = {
 
 export function getAlbums(state = initialState, action) {
     switch (action.type) {
-        case actionTypes.GET_ALBUMS:
+        case actionTypes.SET_LOADING:
+            console.log(state)
             return {
                 ...state,
                 isLoading: true
@@ -41,8 +42,9 @@ export function getAlbums(state = initialState, action) {
         case actionTypes.UPDATED_ALBUM: {
             const newAlbums = [...state.albums]
             const index = newAlbums.findIndex(item => item.id === action.payload.id)
+            console.log(index)
+            console.log(newAlbums[index])
             newAlbums[index] = { ...action.payload }
-
             return {
                 ...state,
                 albums: newAlbums,

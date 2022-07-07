@@ -8,7 +8,7 @@ export default function* updateAlbumSaga() {
 
 function* updateAlbum(action) {
     try {
-        yield put({type: actionTypes.GET_ALBUMS})
+        yield put({type: actionTypes.SET_LOADING})
         const resp = yield call(update, action.payload)
         yield put({ type: actionTypes.UPDATED_ALBUM, payload: resp })
 

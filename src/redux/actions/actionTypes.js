@@ -1,4 +1,8 @@
 const actionTypes = {
+
+
+    SET_LOADING : 'SET_LOADING',
+
     GET_ALBUMS : 'GET_ALBUMS',
     GOT_ALBUMS : 'GOT_ALBUMS',
 

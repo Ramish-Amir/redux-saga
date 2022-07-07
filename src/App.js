@@ -64,6 +64,10 @@ function App(props) {
     setUserId('')
   }
 
+  const closeDialog = ()=> {
+    setDialogOpen(false)
+    clearInputs()
+  }
 
   return (
     <div className="App">
@@ -76,7 +80,7 @@ function App(props) {
         <input onChange={(e) => { setTitle(e.target.value) }} value={title} placeholder='title' type='text' /><br />
         <label>User ID </label>
         <input onChange={(e) => { setUserId(e.target.value) }} value={userId} placeholder='user id' type='text' /><br />
-        <button onClick={() => setDialogOpen(false)}>Cancel</button>
+        <button onClick={closeDialog}>Cancel</button>
         {dialogTitle === 'add' && <button onClick={onAddHandler}>Add</button>}
         {dialogTitle === 'update' && <button onClick={onUpdateHandler}>Update</button>}
       </div>}
