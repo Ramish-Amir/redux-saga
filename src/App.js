@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { useEffect, useState } from 'react';
 
 function App(props) {
-  const { albums, actions } = props
+  const { albums, isLoading, actions } = props
   const [title, setTitle] = useState('')
   const [userId, setUserId] = useState('')
   const [id, setId] = useState()
@@ -16,9 +16,11 @@ function App(props) {
   }, [])
 
   useEffect(() => {
-    if (dialogOpen)
-      setDialogOpen(false)
-  }, [albums])
+    if (dialogOpen && !isLoading) {
+      clearInputs()
+      setDialogOpen(isLoading)
+    }
+  }, [isLoading])
 
   const onDeleteHandler = (album) => {
     actions.removeAlbum(album)
@@ -30,7 +32,6 @@ function App(props) {
       userId: userId
     }
     actions.addAlbum(newAlbum)
-    setDialogOpen(false)
   }
 
   const onUpdateHandler = () => {
@@ -57,13 +58,17 @@ function App(props) {
     setDialogOpen(true)
   }
 
-  const closeDialog = () => {
-
+  const clearInputs = () => {
+    setTitle('')
+    setId('')
+    setUserId('')
   }
 
 
   return (
     <div className="App">
+
+      {isLoading ? <div>Loading</div> : <div>Finished</div>}
 
       {dialogOpen && <div className='dialog'>
         <h2>{dialogTitle}</h2>
@@ -97,6 +102,7 @@ function App(props) {
 const mapStateToProps = state => {
   return ({
     albums: state.getAlbums.albums,
+    isLoading: state.getAlbums.isLoading
   })
 }
 
