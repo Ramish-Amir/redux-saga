@@ -2,7 +2,9 @@ import { combineReducers } from "redux";
 import { getAlbums } from "./albumsReducer";
 
 const rootReducer = combineReducers(
-    { getAlbums }
+    {
+        getAlbums,
+    }
 )
 
 export default rootReducer

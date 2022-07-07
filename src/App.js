@@ -15,6 +15,11 @@ function App(props) {
     actions.getAlbums()
   }, [])
 
+  useEffect(() => {
+    if (dialogOpen)
+      setDialogOpen(false)
+  }, [albums])
+
   const onDeleteHandler = (album) => {
     actions.removeAlbum(album)
   }
@@ -35,7 +40,6 @@ function App(props) {
       userId
     }
     actions.updateAlbum(changedAlbum)
-    setDialogOpen(false)
   }
 
   const openAddDialog = () => {
@@ -53,6 +57,10 @@ function App(props) {
     setDialogOpen(true)
   }
 
+  const closeDialog = () => {
+
+  }
+
 
   return (
     <div className="App">
@@ -60,9 +68,9 @@ function App(props) {
       {dialogOpen && <div className='dialog'>
         <h2>{dialogTitle}</h2>
         <label>Title </label>
-        <input onChange={(e) => {setTitle(e.target.value)}} value={title} placeholder='title' type='text' /><br />
+        <input onChange={(e) => { setTitle(e.target.value) }} value={title} placeholder='title' type='text' /><br />
         <label>User ID </label>
-        <input onChange={(e) => {setUserId(e.target.value)}} value={userId} placeholder='user id' type='text' /><br />
+        <input onChange={(e) => { setUserId(e.target.value) }} value={userId} placeholder='user id' type='text' /><br />
         <button onClick={() => setDialogOpen(false)}>Cancel</button>
         {dialogTitle === 'add' && <button onClick={onAddHandler}>Add</button>}
         {dialogTitle === 'update' && <button onClick={onUpdateHandler}>Update</button>}
